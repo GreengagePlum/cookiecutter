@@ -1,0 +1,34 @@
+{
+  "full_name": "Efe Erken",
+  "email": "efeerkenn@hotmail.com",
+  "project_name": "Python Boilerplate",
+  "__project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
+  "project_short_description": "Python Boilerplate contains all the boilerplate you need to create a Python package.",
+  "version": "0.1.0",
+  "open_source_license": [
+    "MIT",
+    "GPLv3",
+    "Unlicense",
+    "Apache Software License 2.0",
+    "Not open source/No license"
+  ],
+  "gitlab_server_name": "git.unistra.fr",
+  "__gitlab_server_url": "https://{{ cookiecutter.gitlab_server_name }}",
+  "gitlab_namespace": "erken",
+  "__gitlab_project_url": "{{ cookiecutter.__gitlab_server_url }}/{{ cookiecutter.gitlab_namespace }}/{{ cookiecutter.__project_slug }}",
+  "__gitlab_remote": "git@{{ cookiecutter.gitlab_server_name }}:{{ cookiecutter.gitlab_namespace }}/{{ cookiecutter.__project_slug }}.git",
+  "gitlab_pages_url": "https://{{ cookiecutter.gitlab_namespace }}.pages.{{ '.'.join(cookiecutter.__gitlab_server_url.split('.')[1:]) }}/{{ cookiecutter.__project_slug }}",
+  "_github_username": "GreengagePlum",
+  "_pypi_username": "{{ cookiecutter.github_username }}",
+  "__prompts__": {
+    "full_name": "Provide your [bold yellow]full name[/]",
+    "email": "Provide your [bold yellow]email[/]",
+    "open_source_license": "Which [bold yellow]license[/] do you want to use?",
+    "project_name": "Provide a [bold yellow]title[/] for your project",
+    "project_short_description": "Provide a [bold yellow]short description[/] for your project",
+    "version": "Provide the initial [bold yellow]version number[/] for your project (see [link=https://semver.org/]Semantic Versioning[/])",
+    "gitlab_server_name": "Provide the [bold yellow]GitLab server domain[/]",
+    "gitlab_namespace": "Provide the [bold yellow]GitLab namespace[/]",
+    "gitlab_pages_url": "Provide the [bold yellow]documentation URL[/] if different from GitLab Pages default"
+  }
+}

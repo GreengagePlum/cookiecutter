@@ -1,0 +1,6 @@
+*~
+.*.swp
+.DS_Store
+.Trash
+.python-version
+public/

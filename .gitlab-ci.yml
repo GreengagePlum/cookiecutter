@@ -1,0 +1,75 @@
+default:
+  image: python:3.11.3-bullseye
+
+  # Pip's cache doesn't store the python packages
+  # https://pip.pypa.io/en/stable/topics/caching/
+  #
+  # If you want to also cache the installed packages, you have to install
+  # them in a virtualenv and cache it as well.
+  cache:
+    paths:
+      - .cache/pip
+      - .venv/
+      - .cache/pre-commit
+
+  before_script:
+    ## Create environment
+    - chown -R root . # Workaround for misconfigured Unistra GitLab runners https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1194
+    - python --version ; pip --version  # For debugging
+    - python -m venv .venv/
+    - source .venv/bin/activate
+  after_script:
+    - chown -R 1001 . # Workaround for misconfigured Unistra GitLab runners https://gitlab.com/gitlab-org/gitlab-runner/-/issues/1194
+
+# Change pip's cache directory to be inside the project directory since we can
+# only cache local items.
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  PRE_COMMIT_HOME: "$CI_PROJECT_DIR/.cache/pre-commit"
+
+test 1/2:
+  stage: test
+  script:
+    - pip install pre-commit
+    - pre-commit run -a
+  allow_failure: true
+  tags:
+    - kubernetes
+
+test 2/2:
+  stage: test
+  script:
+    - pip install cookiecutter
+    - ./test_cookies.sh -k public/
+  artifacts:
+    paths:
+      - public
+  tags:
+    - kubernetes
+
+release_job:
+  stage: deploy
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG                 # Run this job when a tag is created
+  before_script:
+    - apk add --update --no-cache git python3 && ln -sf python3 /usr/bin/python
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+  script:
+    - echo "Running release_job for $CI_COMMIT_TAG"
+    - LAST_TAGS=$(git for-each-ref --sort='-*committerdate' --count=2 --format '%(refname:short)' refs/tags)
+    - CURRENT_TAG=$(echo $LAST_TAGS | head -n 1)
+    - PREVIOUS_TAG=$(echo $LAST_TAGS | tail -n 1)
+    - condition=$(echo $LAST_TAGS | wc -l);[ $condition -le 1 ] && PREVIOUS_TAG=$(git rev-list --max-parents=0 HEAD)
+    - printf "# Changes\n\n" > RELEASE_NOTES.md
+    - ./extract_changelog.py $CURRENT_TAG >> RELEASE_NOTES.md
+    - printf "\n\n## Commits since the last version\n\n" >> RELEASE_NOTES.md
+    - printf "<details><summary>Click to expand</summary>\n\n" >> RELEASE_NOTES.md
+    - git log --pretty="- [%as] %s" --no-merges --reverse ${PREVIOUS_TAG}..${CURRENT_TAG} >> RELEASE_NOTES.md
+    - printf "\n\n</details>" >> RELEASE_NOTES.md
+  release:                               # See https://docs.gitlab.com/ee/ci/yaml/#release for available properties
+    tag_name: $CI_COMMIT_TAG
+    name: 'Release $CI_COMMIT_TAG'
+    description: './RELEASE_NOTES.md'
+  tags:
+    - kubernetes
