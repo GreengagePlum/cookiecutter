@@ -40,7 +40,7 @@ test 2/2:
   stage: test
   script:
     - pip install cookiecutter
-    - ./test_cookies.sh -k public/
+    - ./test_cookies.py -k public/
   artifacts:
     paths:
       - public

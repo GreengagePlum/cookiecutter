@@ -38,6 +38,6 @@ repos:
         name: cookiecutter (test-run)
         stages: [pre-push]
         language: system
-        entry: ./test_cookies.sh
+        entry: ./test_cookies.py
         pass_filenames: false
         always_run: true
