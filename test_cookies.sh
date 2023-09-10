@@ -28,7 +28,7 @@ fi
 test_failed=0
 
 # Run cookiecutter for each of the nested cookiecutter templates
-find . -maxdepth 1 -type d | grep -Ev "(\.$|\.git|\.venv|images|c|html|bare)" | xargs -tI {} cookiecutter {} -o $out_dir/{} --no-input || test_failed=$?
+find . -maxdepth 1 -type d | grep -Ev "(\.$|\.git|\.venv|images|templates|c|html|bare)" | xargs -tI {} cookiecutter {} -o $out_dir/{} --no-input || test_failed=$?
 
 # Optionally delete or keep the files that cookiecutter generates
 [ $del_out_dir = "true" ] && rm -rf -- $out_dir
