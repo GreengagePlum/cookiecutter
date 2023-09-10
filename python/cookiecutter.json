@@ -4,7 +4,7 @@
   "project_name": "Python Boilerplate",
   "__project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
   "project_short_description": "Python Boilerplate contains all the boilerplate you need to create a Python package.",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "open_source_license": [
     "MIT",
     "GPLv3",
@@ -13,8 +13,8 @@
     "Not open source/No license"
   ],
   "gitlab_server_name": "git.unistra.fr",
-  "__gitlab_server_url": "https://{{ cookiecutter.gitlab_server_name }}",
   "gitlab_namespace": "erken",
+  "__gitlab_server_url": "https://{{ cookiecutter.gitlab_server_name }}",
   "__gitlab_project_url": "{{ cookiecutter.__gitlab_server_url }}/{{ cookiecutter.gitlab_namespace }}/{{ cookiecutter.__project_slug }}",
   "__gitlab_remote": "git@{{ cookiecutter.gitlab_server_name }}:{{ cookiecutter.gitlab_namespace }}/{{ cookiecutter.__project_slug }}.git",
   "gitlab_pages_url": "https://{{ cookiecutter.gitlab_namespace }}.pages.{{ '.'.join(cookiecutter.__gitlab_server_url.split('.')[1:]) }}/{{ cookiecutter.__project_slug }}",
