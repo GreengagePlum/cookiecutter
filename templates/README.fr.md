@@ -1,6 +1,6 @@
 # Cookiecutter
 
-[![état du pipeline](https://___/-/badges/main/pipeline.svg)](https://___/-/commits/main)
+[![état du pipeline](https://___/badges/main/pipeline.svg)](https://___/-/commits/main)
 [![dernière version](https://___/-/badges/release.svg)](https://___/-/releases/permalink/latest)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 

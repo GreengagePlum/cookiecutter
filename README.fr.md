@@ -1,6 +1,6 @@
 # Cookiecutter
 
-[![état du pipeline](https://git.unistra.fr/erken/cookiecutter/-/badges/main/pipeline.svg)](https://git.unistra.fr/erken/cookiecutter/-/commits/main)
+[![état du pipeline](https://git.unistra.fr/erken/cookiecutter/badges/main/pipeline.svg)](https://git.unistra.fr/erken/cookiecutter/-/commits/main)
 [![dernière version](https://git.unistra.fr/erken/cookiecutter/-/badges/release.svg)](https://git.unistra.fr/erken/cookiecutter/-/releases/permalink/latest)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
