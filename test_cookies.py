@@ -31,6 +31,8 @@ for e in dirs_list:
         cookiecutters.append(os.path.join(project_root_dir, e))
 cookiecutters.sort()
 
+# Run cookiecutter to test for errors during template generation
+# Allow errors if no cookiecutter repo was found (not a template directory)
 for cookie in cookiecutters:
     try:
         cookiecutter(cookie, no_input=True, output_dir=args.keep.name, overwrite_if_exists=True)
@@ -38,5 +40,6 @@ for cookie in cookiecutters:
     except RepositoryNotFound:
         print(f"{cookie} ...SKIPPED (not a template)", file=sys.stderr)
 
+# Print the output directory if any were specified
 if type(args.keep) is not tempfile.TemporaryDirectory:
     print(f"Generated content written to: {args.keep.name}", file=sys.stderr)
