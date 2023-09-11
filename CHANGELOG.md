@@ -14,6 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Python cookiecutter template
 - Base files for the git repository
 
-[unreleased]: https://git.unistra.fr/erken/cookiecutter/compare/v0.0.1...HEAD
+[unreleased]: https://git.unistra.fr/erken/cookiecutter/-/compare/v0.0.1...HEAD
 
-[0.0.1]: https://git.unistra.fr/erken/cookiecutter/tags/v0.0.1
+[0.0.1]: https://git.unistra.fr/erken/cookiecutter/-/releases/v0.0.1
