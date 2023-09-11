@@ -39,8 +39,8 @@ test 1/2:
 test 2/2:
   stage: test
   script:
-    - pip install cookiecutter
-    - ./test_cookies.py -k public/
+    - pip install pre-commit cookiecutter
+    - pre-commit run -a --hook-stage manual cookiecutter-ci
   artifacts:
     paths:
       - public
@@ -51,23 +51,14 @@ release_job:
   stage: deploy
   image: registry.gitlab.com/gitlab-org/release-cli:latest
   rules:
-    - if: $CI_COMMIT_TAG                 # Run this job when a tag is created
+    - if: $CI_COMMIT_TAG  # Run this job when a tag is created
   before_script:
     - apk add --update --no-cache git python3 && ln -sf python3 /usr/bin/python
     - git config --global --add safe.directory "$CI_PROJECT_DIR"
   script:
     - echo "Running release_job for $CI_COMMIT_TAG"
-    - LAST_TAGS=$(git for-each-ref --sort='-*committerdate' --count=2 --format '%(refname:short)' refs/tags)
-    - CURRENT_TAG=$(echo $LAST_TAGS | head -n 1)
-    - PREVIOUS_TAG=$(echo $LAST_TAGS | tail -n 1)
-    - condition=$(echo $LAST_TAGS | wc -l);[ $condition -le 1 ] && PREVIOUS_TAG=$(git rev-list --max-parents=0 HEAD)
-    - printf "# Changes\n\n" > RELEASE_NOTES.md
-    - ./extract_changelog.py $CURRENT_TAG >> RELEASE_NOTES.md
-    - printf "\n\n## Commits since the last version\n\n" >> RELEASE_NOTES.md
-    - printf "<details><summary>Click to expand</summary>\n\n" >> RELEASE_NOTES.md
-    - git log --pretty="- [%as] %s" --no-merges --reverse ${PREVIOUS_TAG}..${CURRENT_TAG} >> RELEASE_NOTES.md
-    - printf "\n\n</details>" >> RELEASE_NOTES.md
-  release:                               # See https://docs.gitlab.com/ee/ci/yaml/#release for available properties
+    - ./create_latest_release_description.sh > RELEASE_NOTES.md
+  release:  # See https://docs.gitlab.com/ee/ci/yaml/#release for available properties
     tag_name: $CI_COMMIT_TAG
     name: 'Release $CI_COMMIT_TAG'
     description: './RELEASE_NOTES.md'

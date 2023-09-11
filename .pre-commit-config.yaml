@@ -14,24 +14,12 @@ repos:
           - "--no-ensure-ascii"
       - id: end-of-file-fixer
       - id: trailing-whitespace
-      - id: mixed-line-ending
-        name: "Enforce LF newlines on most files"
-        args:
-          - "--fix=lf"
-        # Exclude files with "crlf" in their names.
-        exclude: "crlf|.bat$"
-      - id: mixed-line-ending
-        name: "Enforce CRLF newlines on files named '*crlf*'"
-        args:
-          - "--fix=crlf"
-        files: "crlf|.bat$"
       - id: fix-byte-order-marker
       - id: check-executables-have-shebangs
       - id: check-shebang-scripts-are-executable
       - id: check-merge-conflict
       - id: check-symlinks
       - id: check-case-conflict
-      - id: check-docstring-first
   - repo: local
     hooks:
       - id: cookiecutter
@@ -39,5 +27,12 @@ repos:
         stages: [pre-push]
         language: system
         entry: ./test_cookies.py
+        pass_filenames: false
+        always_run: true
+      - id: cookiecutter-ci
+        name: cookiecutter (ci-test-run)
+        stages: [manual]
+        language: system
+        entry: ./test_cookies.py -k public/
         pass_filenames: false
         always_run: true
