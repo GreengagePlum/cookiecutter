@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 
 """This script tests if each of the cookiecutter templates work without errors."""
 
